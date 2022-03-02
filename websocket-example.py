@@ -42,7 +42,6 @@ def on_ping(wsapp, message):
 
 def on_pong(wsapp, message):
   print("Got a pong! No need to respond")
-  wsapp.send("40")
 
 def on_error(wsapp, error):
   print(f'{str(error)}   ### OFFLINE ###')
