@@ -28,32 +28,33 @@ def on_message(wsapp, message):
 
 def on_close(wsapp, opt1, opt2):
   print ("Retry : %s" % time.ctime())
+
+  # keep in mind this might not be the right way to keep the app running and could lead to too much recursion
   time.sleep(10)
   start_sockets()
 
 def on_open(wsapp):
   print("on_open")
-  wsapp.send("3probe")
+  wsapp.send("40")
 
 def on_ping(wsapp, message):
   print("Got a ping! A pong reply has already been automatically sent.")
 
 def on_pong(wsapp, message):
   print("Got a pong! No need to respond")
-  wsapp.send("3probe")
+  wsapp.send("40")
 
 def on_error(wsapp, error):
   print(f'{str(error)}   ### OFFLINE ###')
 
 def start_sockets():
-  socket_url = "wss://" + CTM_SOCKS + "/socket.io/?EIO=3&transport=websocket"
+  socket_url = "wss://" + CTM_SOCKS + "/socket.io/?EIO=4&transport=websocket"
   print("connecting to: ", socket_url)
 
   wsapp = websocket.WebSocketApp(socket_url, on_open=on_open, on_close=on_close, on_message=on_message, on_ping=on_ping, on_pong=on_pong)
 #  websocket.enableTrace(True)
 
-#  output = json.dumps(["calls.active", { "account": CTM_ACCOUNT_ID }])
-  wsapp.run_forever(ping_interval=10, ping_timeout=5, ping_payload="3probe")
+  wsapp.run_forever(ping_interval=10, ping_timeout=5, ping_payload="40")
 
 def get_user_id():
   res = requests.get("https://" + CTM_HOST + "/api/v1/accounts/" + CTM_ACCOUNT_ID + "/users", auth=HTTPBasicAuth(CTM_TOKEN, CTM_PASS))

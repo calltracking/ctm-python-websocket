@@ -26,7 +26,7 @@ we'll use API keys.
 Export your basic authentication API keys from the account settings.  Keep in mind this example will only work with account level keys not agency level keys
 
 ```bash
-export CTM_OKEN='a...d.....'
+export CTM_TOKEN='a...d.....'
 export CTM_SECRET='........'
 export CTM_HOST='app.calltrackingmetrics.com'
 export CTM_SOCKS='app.calltrackingmetrics.com'
